@@ -70,97 +70,6 @@ def ber(p):
     else:
         return 0
 
-def plot_gradual_evolution(n, x0, p, r, m, k,f, x_inf):
-    # Initialize list for x
-    x = [x0]
-    n1 = []
-
-    # Create a placeholder for the plot
-    plot_placeholder = st.empty()
-
-    # Gradually generate data for x and plot in Streamlit
-    for t in range(k):
-        a = [0 for i in range(n)]
-        count = [0 for i in range(n)]
-        avg_pay = [0 for i in range(n)]
-        n1.append(round(n * x[t]))
-        
-        for i in range(m * n):  # Number of conflicts
-            p1 = nr.randint(0, n-1)
-            p2 = nr.randint(0, n-1)
-            count[p1] += 1
-            count[p2] += 1
-            if p1 == p2:
-                count[p1] -= 1
-                count[p2] -= 1
-            elif (p1 < n1[t]) and (p2 < n1[t]):
-                s1 = ber(r)
-                s2 = ber(r)
-                a[p1] += e(s1, s2)
-                a[p2] += e(s2, s1)
-            elif (p1 < n1[t]) and (p2 >= n1[t]):
-                s1 = ber(r)
-                s2 = ber(p)
-                a[p1] += e(s1, s2)
-                a[p2] += e(s2, s1)
-            elif (p1 >= n1[t]) and (p2 >= n1[t]):
-                s1 = ber(p)
-                s2 = ber(p)
-                a[p1] += e(s1, s2)
-                a[p2] += e(s2, s1)
-            elif (p1 >= n1[t]) and (p2 < n1[t]):
-                s1 = ber(p)
-                s2 = ber(r)
-                a[p1] += e(s1, s2)
-                a[p2] += e(s2, s1)
-
-        # Calculate average payoff for each player
-        avg_pay = [a[i] / count[i] if count[i] > 0 else 0 for i in range(n)]
-        
-        # Mean of payoffs for the two strategies
-        mut_avg = np.mean(avg_pay[:int(n1[t])]) if len(avg_pay[:int(n1[t])]) > 0 else 0
-        non_mut_avg = np.mean(avg_pay[int(n1[t]):]) if len(avg_pay[int(n1[t]):]) > 0 else 0
-        
-        # Update the value of x using the evolution equation
-        if (mut_avg < 0) and ( non_mut_avg< 0 ):
-            f=max(abs(mut_avg) , abs(non_mut_avg))+f
-            mut_avg+=f
-            non_mut_avg+=f
-            x_new=(x[t]*mut_avg)/((x[t]*mut_avg)+((1-x[t])*non_mut_avg))
-        elif mut_avg*non_mut_avg<0:
-            f=max(abs(mut_avg) , abs(non_mut_avg))+f
-            mut_avg+=f
-            non_mut_avg+=f
-            x_new=(x[t]*mut_avg)/((x[t]*mut_avg)+((1-x[t])*non_mut_avg))
-    
-        else:
-            x_new=(x[t]*mut_avg)/((x[t]*mut_avg)+((1-x[t])*non_mut_avg))
-        x.append(x_new)
-
-        # Gradually plot the values of x
-        fig, ax = plt.subplots(figsize=(10, 6))
-        ax.plot(range(len(x)),x, marker='o', color='b', label="Mutant proportion")
-        ax.axhline(y=x_inf, color='r', linestyle='--', label='$x_{inf}$')
-        ax.axhline(y=x_inf+0.01, color='blue', linestyle='--', label='$x_{inf}+.01$')
-        ax.axhline(y=x_inf-0.01, color='blue', linestyle='--', label='$x_{inf}-.01$')
-        plt.fill_between(range(len(x)), x_inf-0.01, x_inf+0.01, color='skyblue', alpha=0.5)
-        ax.set_title("Gradual Evolution of mutant population")
-        ax.set_xlabel("Generation")
-        ax.set_ylabel("Mutant Proportion")
-        ax.grid(True)
-        ax.legend()
-
-        # Update the plot in Streamlit
-        plot_placeholder.pyplot(fig)
-
-        # Simulate delay before next update
-        time.sleep(.1)
-
-        # Close the figure after each update to avoid overlapping
-        plt.close()
-
-
-
            
             
 
@@ -373,6 +282,96 @@ with tab2:
         st.markdown(f"* The mutant population proportion eventually converge to $(x_{{inf}}) = {round(x_inf,4)}$")
     
 with tab3:
+    def plot_gradual_evolution(n, x0, p, r, m, k,f, x_inf):
+        # Initialize list for x
+        x = [x0]
+        n1 = []
+        e_rq=x0*em(r,r)+(1-x0)*em(r,p)
+        e_pq=x0*em(p,r)+(1-x0)*em(p,p)
+        if e_pq<0 or e_rq<0:
+            f=f
+        else:
+            f=0
+    
+        # Create a placeholder for the plot
+        plot_placeholder = st.empty()
+    
+        # Gradually generate data for x and plot in Streamlit
+        for t in range(k):
+            a = [0 for i in range(n)]
+            count = [0 for i in range(n)]
+            avg_pay = [0 for i in range(n)]
+            n1.append(round(n * x[t]))
+            
+            for i in range(m * n):  # Number of conflicts
+                p1 = nr.randint(0, n-1)
+                p2 = nr.randint(0, n-1)
+                count[p1] += 1
+                count[p2] += 1
+                if p1 == p2:
+                    count[p1] -= 1
+                    count[p2] -= 1
+                elif (p1 < n1[t]) and (p2 < n1[t]):
+                    s1 = ber(r)
+                    s2 = ber(r)
+                    a[p1] += e(s1, s2)
+                    a[p2] += e(s2, s1)
+                elif (p1 < n1[t]) and (p2 >= n1[t]):
+                    s1 = ber(r)
+                    s2 = ber(p)
+                    a[p1] += e(s1, s2)
+                    a[p2] += e(s2, s1)
+                elif (p1 >= n1[t]) and (p2 >= n1[t]):
+                    s1 = ber(p)
+                    s2 = ber(p)
+                    a[p1] += e(s1, s2)
+                    a[p2] += e(s2, s1)
+                elif (p1 >= n1[t]) and (p2 < n1[t]):
+                    s1 = ber(p)
+                    s2 = ber(r)
+                    a[p1] += e(s1, s2)
+                    a[p2] += e(s2, s1)
+    
+            # Calculate average payoff for each player
+            avg_pay = [a[i] / count[i] if count[i] > 0 else 0 for i in range(n)]
+            
+            # Mean of payoffs for the two strategies
+            mut_avg = np.mean(avg_pay[:int(n1[t])]) if len(avg_pay[:int(n1[t])]) > 0 else 0
+            non_mut_avg = np.mean(avg_pay[int(n1[t]):]) if len(avg_pay[int(n1[t]):]) > 0 else 0
+            
+            # Update the value of x using the evolution equation
+            mut_avg+=f
+            non_mut_avg+=f
+            x_new=(x[t]*mut_avg)/((x[t]*mut_avg)+((1-x[t])*non_mut_avg))
+
+            x.append(x_new)
+    
+            # Gradually plot the values of x
+            fig, ax = plt.subplots(figsize=(10, 6))
+            ax.plot(range(len(x)),x, marker='o', color='b', label="Mutant proportion")
+            ax.axhline(y=x_inf, color='r', linestyle='--', label='$x_{inf}$')
+            ax.axhline(y=x_inf+0.01, color='blue', linestyle='--', label='$x_{inf}+.01$')
+            ax.axhline(y=x_inf-0.01, color='blue', linestyle='--', label='$x_{inf}-.01$')
+            plt.fill_between(range(len(x)), x_inf-0.01, x_inf+0.01, color='skyblue', alpha=0.5)
+            ax.set_title("Gradual Evolution of mutant population")
+            ax.set_xlabel("Generation")
+            ax.set_ylabel("Mutant Proportion")
+            ax.grid(True)
+            ax.legend()
+    
+        # Update the plot in Streamlit
+        plot_placeholder.pyplot(fig)
+
+        # Simulate delay before next update
+        time.sleep(.1)
+
+        # Close the figure after each update to avoid overlapping
+        plt.close()
+
+
+
+
+    
     sim_work = st.selectbox(
     '',
     ['Simulation Overview', 'Simulation Results']
