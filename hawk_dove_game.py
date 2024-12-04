@@ -226,7 +226,7 @@ p = st.sidebar.slider("Majority Strategy (p)", min_value=0.0, max_value=1.0, val
 r = st.sidebar.slider("Mutant Strategy (r)", min_value=0.0, max_value=1.0, value=0.7, step=0.01)
 x0 = st.sidebar.slider("Initial Mutant proportion ($x_0$)", min_value=0.0, max_value=1.0, value=0.7, step=0.01)
 # n = st.sidebar.slider("Number of creatures ($n$)", min_value=0, max_value=5000, value=2000, step=100)
-f = st.sidebar.slider("Basic fitness $(f)$  ", min_value=0.0, max_value=10.0, value=5, step=0.1)
+f = st.sidebar.slider("Basic fitness $(f)$  ", min_value=0.0, max_value=10.0, value=5.0, step=0.1)
 k = st.sidebar.slider("Number of generations", min_value=100, max_value=1000, value=100, step=100)
 # n_conflict=n*m
 # Create tabs
