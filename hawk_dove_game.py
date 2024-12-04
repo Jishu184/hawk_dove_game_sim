@@ -1,5 +1,5 @@
 
-pip install matplotlib
+!pip install matplotlib
 
 
 
