@@ -288,14 +288,14 @@ with tab3:
         n1 = []
         e_rq=x0*em(r,r)+(1-x0)*em(r,p)
         e_pq=x0*em(p,r)+(1-x0)*em(p,p)
+        st.markdown([e_pq, e_rq])
         if e_pq<0 or e_rq<0:
             f=f
         else:
             f=0
-    
         # Create a placeholder for the plot
         plot_placeholder = st.empty()
-    
+
         # Gradually generate data for x and plot in Streamlit
         for t in range(k):
             a = [0 for i in range(n)]
@@ -331,21 +331,19 @@ with tab3:
                     s2 = ber(r)
                     a[p1] += e(s1, s2)
                     a[p2] += e(s2, s1)
-    
+
             # Calculate average payoff for each player
             avg_pay = [a[i] / count[i] if count[i] > 0 else 0 for i in range(n)]
             
             # Mean of payoffs for the two strategies
             mut_avg = np.mean(avg_pay[:int(n1[t])]) if len(avg_pay[:int(n1[t])]) > 0 else 0
             non_mut_avg = np.mean(avg_pay[int(n1[t]):]) if len(avg_pay[int(n1[t]):]) > 0 else 0
-            
-            # Update the value of x using the evolution equation
             mut_avg+=f
             non_mut_avg+=f
-            x_new=(x[t]*mut_avg)/((x[t]*mut_avg)+((1-x[t])*non_mut_avg))
-
+            # Update the value of x using the evolution equation
+            x_new = ( x[t] * mut_avg) / ((x[t] * mut_avg) + ((1 - x[t]) * non_mut_avg))
             x.append(x_new)
-    
+
             # Gradually plot the values of x
             fig, ax = plt.subplots(figsize=(10, 6))
             ax.plot(range(len(x)),x, marker='o', color='b', label="Mutant proportion")
@@ -358,17 +356,15 @@ with tab3:
             ax.set_ylabel("Mutant Proportion")
             ax.grid(True)
             ax.legend()
-    
-        # Update the plot in Streamlit
-        plot_placeholder.pyplot(fig)
 
-        # Simulate delay before next update
-        time.sleep(.1)
+            # Update the plot in Streamlit
+            plot_placeholder.pyplot(fig)
 
-        # Close the figure after each update to avoid overlapping
-        plt.close()
+            # Simulate delay before next update
+            time.sleep(.1)
 
-
+            # Close the figure after each update to avoid overlapping
+            plt.close()
 
 
     
