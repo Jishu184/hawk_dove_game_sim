@@ -3,7 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import time
 import threading
-from matplotlib.animation import FuncAnimation
 import numpy.random as nr
 import numpy as np
 
