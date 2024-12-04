@@ -226,7 +226,7 @@ p = st.sidebar.slider("Majority Strategy (p)", min_value=0.0, max_value=1.0, val
 r = st.sidebar.slider("Mutant Strategy (r)", min_value=0.0, max_value=1.0, value=0.7, step=0.01)
 x0 = st.sidebar.slider("Initial Mutant proportion ($x_0$)", min_value=0.0, max_value=1.0, value=0.7, step=0.01)
 # n = st.sidebar.slider("Number of creatures ($n$)", min_value=0, max_value=5000, value=2000, step=100)
-# m = st.sidebar.slider("Number of conflicts : multiplier of $n$   $(m)$  ", min_value=100, max_value=1000, value=100, step=100)
+f = st.sidebar.slider("Basic fitness $(f)$  ", min_value=0, max_value=10, value=5, step=.1)
 k = st.sidebar.slider("Number of generations", min_value=100, max_value=1000, value=100, step=100)
 # n_conflict=n*m
 # Create tabs
@@ -426,7 +426,7 @@ with tab3:
                 st.markdown('')
                 st.markdown('')
                 st.markdown('')
-                plot_gradual_evolution(n=100, x0=x0, p=p, r=r, m=100, k=k,f=10, x_inf=x_inf)
+                plot_gradual_evolution(n=100, x0=x0, p=p, r=r, m=100, k=k,f=f, x_inf=x_inf)
             
             st.markdown('---')
             with col1: 
@@ -448,7 +448,7 @@ with tab3:
                 st.markdown('')
                 st.markdown('')
                 st.markdown('')
-                plot_gradual_evolution(n=500, x0=x0, p=p, r=r, m=500, k=k,f=10, x_inf=x_inf)            
+                plot_gradual_evolution(n=500, x0=x0, p=p, r=r, m=500, k=k,f=f, x_inf=x_inf)            
             st.markdown('---')
             with col1: 
 
@@ -470,7 +470,7 @@ with tab3:
                 st.markdown('')
                 st.markdown('')
                 st.markdown('')
-                plot_gradual_evolution(n=1000, x0=x0, p=p, r=r, m=500, k=k,f=10, x_inf=x_inf) 
+                plot_gradual_evolution(n=1000, x0=x0, p=p, r=r, m=500, k=k,f=f, x_inf=x_inf) 
 
 
 
