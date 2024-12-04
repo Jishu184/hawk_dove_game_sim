@@ -424,7 +424,6 @@ with tab3:
             
             st.markdown('---')
             with col1: 
-                st.markdown('---')
                 st.markdown("### Simulation 2")
                 st.markdown("* $n= 500 , m=250$")
                 st.markdown(f"""
@@ -465,7 +464,7 @@ with tab3:
                 st.markdown('')
                 st.markdown('')
                 plot_gradual_evolution(n=1000, x0=x0, p=p, r=r, m=500, k=k,f=f, x_inf=x_inf) 
-
+             st.markdown('---')
 
 
 
