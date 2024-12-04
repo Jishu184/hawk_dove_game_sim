@@ -1,5 +1,5 @@
 
-
+! pip install  matplotlib.pyplot
 
 
 import streamlit as st
