@@ -122,7 +122,17 @@ def plot_gradual_evolution(n, x0, p, r, m, k,f, x_inf):
         non_mut_avg = np.mean(avg_pay[int(n1[t]):]) if len(avg_pay[int(n1[t]):]) > 0 else 0
         
         # Update the value of x using the evolution equation
-        x_new = (f + x[t] * mut_avg) / (f + (x[t] * mut_avg) + ((1 - x[t]) * non_mut_avg))
+        if (mut_avg < 0) and ( non_mut_avg< 0 ):
+            f=max(abs(mut_avg) , abs(non_mut_avg))+f
+            mut_avg+=f
+            non_mut_avg+=f
+            # x_new=(x[t]*mut_avg)/((x[t]*mut_avg)+((1-x[t])*non_mut_avg))
+        elif mut_avg*non_mut_avg<0:
+            f=max(abs(mut_avg) , abs(non_mut_avg))+f
+            mut_avg+=f
+            non_mut_avg+=f
+            # x_new=(x[t]*mut_avg)/((x[t]*mut_avg)+((1-x[t])*non_mut_avg))
+        x_new = (x[t] * mut_avg) / ((x[t] * mut_avg) + ((1 - x[t]) * non_mut_avg))
         x.append(x_new)
 
         # Gradually plot the values of x
