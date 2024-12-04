@@ -368,7 +368,7 @@ with tab3:
     if  sim_work==    'Simulation Overview':
         st.markdown('### Simulation Overview')
         st.markdown(f"""
-        * Suppose a country accommodate $n$ birds ($n$ is set to a large number)
+        * Suppose an island can accommodate $n$ birds ($n$ is set to a large number). We assume there is no inflow or outflow of birds in this population.
         * Two species of birds are there .
             * Species A and B .
             * A is the majority species .
@@ -385,10 +385,11 @@ with tab3:
             * Mutant  strategy $(r)={r}$
             * Each species A bird  will randomly select a strategy (Hawk strategy with probability $p={p}$ )
             * Each species B bird  will randomly select a strategy (Hawk strategy with probability $r={r}$ )
-            * Any bird can have multiple conflicts and its total and average fitness are noted . 
-            * Reproductive capacity is assumed to be proportional to its average fitness. 
+            * There is no limit on the maximum number of conflicts a bird can face in its lifetime. 
+            * Total fitness of a bird is equal to the sum of basic fitness and the payoff in the fame.
+            * The growth factors of the mutant population are proportional to total fitness of r.
         * New generation simulation
-            * At the end of any generatio  all the birds will give birth to offsprings and will die . 
+            * At the end of any generation, the birds will give birth to offsprings and will die . 
             * If the avg. Reproductive capacity of mutant population is more than that of majority population , mutant population will increase .
             """)
     if sim_work=='Simulation Results':
