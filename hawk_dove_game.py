@@ -426,7 +426,7 @@ with tab3:
                 st.markdown('')
                 st.markdown('')
                 st.markdown('')
-                plot_gradual_evolution(n=100, x0=x0, p=p, r=r, m=100, k=k,f=0, x_inf=x_inf)
+                plot_gradual_evolution(n=100, x0=x0, p=p, r=r, m=100, k=k,f=10, x_inf=x_inf)
             
             st.markdown('---')
             with col1: 
@@ -448,7 +448,7 @@ with tab3:
                 st.markdown('')
                 st.markdown('')
                 st.markdown('')
-                plot_gradual_evolution(n=500, x0=x0, p=p, r=r, m=500, k=k,f=0, x_inf=x_inf)            
+                plot_gradual_evolution(n=500, x0=x0, p=p, r=r, m=500, k=k,f=10, x_inf=x_inf)            
             st.markdown('---')
             with col1: 
 
@@ -470,7 +470,7 @@ with tab3:
                 st.markdown('')
                 st.markdown('')
                 st.markdown('')
-                plot_gradual_evolution(n=1000, x0=x0, p=p, r=r, m=500, k=k,f=0, x_inf=x_inf) 
+                plot_gradual_evolution(n=1000, x0=x0, p=p, r=r, m=500, k=k,f=10, x_inf=x_inf) 
 
 
 
