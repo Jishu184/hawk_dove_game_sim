@@ -126,13 +126,15 @@ def plot_gradual_evolution(n, x0, p, r, m, k,f, x_inf):
             f=max(abs(mut_avg) , abs(non_mut_avg))+f
             mut_avg+=f
             non_mut_avg+=f
-            # x_new=(x[t]*mut_avg)/((x[t]*mut_avg)+((1-x[t])*non_mut_avg))
+            x_new=(x[t]*mut_avg)/((x[t]*mut_avg)+((1-x[t])*non_mut_avg))
         elif mut_avg*non_mut_avg<0:
             f=max(abs(mut_avg) , abs(non_mut_avg))+f
             mut_avg+=f
             non_mut_avg+=f
-            # x_new=(x[t]*mut_avg)/((x[t]*mut_avg)+((1-x[t])*non_mut_avg))
-        x_new = (x[t] * mut_avg) / ((x[t] * mut_avg) + ((1 - x[t]) * non_mut_avg))
+            x_new=(x[t]*mut_avg)/((x[t]*mut_avg)+((1-x[t])*non_mut_avg))
+    
+        else:
+            x_new=(x[t]*mut_avg)/((x[t]*mut_avg)+((1-x[t])*non_mut_avg))
         x.append(x_new)
 
         # Gradually plot the values of x
