@@ -288,7 +288,6 @@ with tab3:
         n1 = []
         e_rq=x0*em(r,r)+(1-x0)*em(r,p)
         e_pq=x0*em(p,r)+(1-x0)*em(p,p)
-        st.markdown([e_pq, e_rq])
         if e_pq<0 or e_rq<0:
             f=f
         else:
